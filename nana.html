@@ -1,139 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Tic Tac Toe</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-
-    .game {
-      text-align: center;
-    }
-
-    h1 {
-      margin-bottom: 10px;
-    }
-
-    .status {
-      margin-bottom: 15px;
-      font-size: 18px;
-    }
-
-    .board {
-      display: grid;
-      grid-template-columns: repeat(3, 100px);
-      grid-template-rows: repeat(3, 100px);
-      gap: 5px;
-      margin-bottom: 15px;
-    }
-
-    .cell {
-      background: white;
-      border: 2px solid #333;
-      font-size: 36px;
-      font-weight: bold;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-    }
-
-    .cell:hover {
-      background: #eee;
-    }
-
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Shoe Store</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #111;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        nav {
+            background-color: #333;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            padding: 20px;
+        }
+        .products {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .product {
+            background: white;
+            padding: 15px;
+            width: 200px;
+            border-radius: 5px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .product img {
+            width: 100%;
+            height: auto;
+        }
+        .product button {
+            background-color: #111;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .product button:hover {
+            background-color: #444;
+        }
+        footer {
+            background-color: #111;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-  <div class="game">
-    <h1>Tic Tac Toe</h1>
-    <div class="status" id="status">Player X's turn</div>
 
-    <div class="board" id="board">
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
+<header>
+    <h1>StepUp Shoes</h1>
+    <p>Comfort • Style • Performance</p>
+</header>
+
+<nav>
+    <a href="#">Home</a>
+    <a href="#">Shop</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+</nav>
+
+<div class="container">
+    <h2 style="text-align:center;">Our Collection</h2>
+
+    <div class="products">
+        <div class="product">
+            <img src="https://via.placeholder.com/200" alt="Running Shoes">
+            <h3>Running Shoes</h3>
+            <p>$79.99</p>
+            <button>Buy Now</button>
+        </div>
+
+        <div class="product">
+            <img src="https://via.placeholder.com/200" alt="Casual Shoes">
+            <h3>Casual Shoes</h3>
+            <p>$59.99</p>
+            <button>Buy Now</button>
+        </div>
+
+        <div class="product">
+            <img src="https://via.placeholder.com/200" alt="Sneakers">
+            <h3>Sneakers</h3>
+            <p>$69.99</p>
+            <button>Buy Now</button>
+        </div>
     </div>
+</div>
 
-    <button onclick="restartGame()">Restart</button>
-  </div>
+<footer>
+    <p>&copy; 2026 StepUp Shoes. All rights reserved.</p>
+</footer>
 
-  <script>
-    const cells = document.querySelectorAll(".cell");
-    const statusText = document.getElementById("status");
-
-    let currentPlayer = "X";
-    let gameActive = true;
-    let board = ["", "", "", "", "", "", "", "", ""];
-
-    const winningCombinations = [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8],
-      [0, 4, 8],
-      [2, 4, 6]
-    ];
-
-    cells.forEach((cell, index) => {
-      cell.addEventListener("click", () => handleCellClick(index));
-    });
-
-    function handleCellClick(index) {
-      if (board[index] !== "" || !gameActive) return;
-
-      board[index] = currentPlayer;
-      cells[index].textContent = currentPlayer;
-
-      if (checkWinner()) {
-        statusText.textContent = `Player ${currentPlayer} wins! 🎉`;
-        gameActive = false;
-        return;
-      }
-
-      if (board.every(cell => cell !== "")) {
-        statusText.textContent = "It's a draw!";
-        gameActive = false;
-        return;
-      }
-
-      currentPlayer = currentPlayer === "X" ? "O" : "X";
-      statusText.textContent = `Player ${currentPlayer}'s turn`;
-    }
-
-    function checkWinner() {
-      return winningCombinations.some(combination => {
-        return combination.every(index => board[index] === currentPlayer);
-      });
-    }
-
-    function restartGame() {
-      board = ["", "", "", "", "", "", "", "", ""];
-      currentPlayer = "X";
-      gameActive = true;
-      statusText.textContent = "Player X's turn";
-      cells.forEach(cell => (cell.textContent = ""));
-    }
-  </script>
 </body>
 </html>
